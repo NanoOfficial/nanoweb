@@ -1,0 +1,84 @@
+<!DOCTYPE HTML><html><head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Error: {{ .Code }} {{ .Title }}</title>
+    <style type="text/css" media="screen">
+html,body{
+  padding:0;
+  margin:0;
+  font-family: Tahoma;
+  color: #34495e;
+}
+h1 {
+  color: #fff;
+  margin: 0;
+}
+.container {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+#header {
+  display: block;
+  background-color: #121f28;
+  height: 120px;
+  width: 100%;
+}
+#title {
+  padding: 40px 0;
+}
+.error {
+  color: #c0392b;
+}
+pre code {
+  font-family: "Lucida Console", Monaco, monospace;
+}
+pre.request-dump {
+  background-color: #eeeeee;
+  padding: 20px 20px 0 20px;
+  overflow: auto;
+}
+#backtrace {
+  list-style: none;
+  padding-left: 0;
+  font-family: "Lucida Console", Monaco, monospace;
+}
+#backtrace li {
+  border-left: 5px solid #61A8DC;
+  padding-left: 20px;
+}
+#backtrace .file {
+  color: #93c3e5;
+}
+#backtrace .lineno {
+color: #5e380b;
+}
+#backtrace .method {
+  color: #00ff44;
+}
+
+    </style>
+    <body>
+      <div id="header">
+        <div class="container">
+          <div id="title">
+            <h1>Error: {{ .Code }} {{ .Title }}</h1>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <p>Sorry, the requested URL  caused an error: </p>
+        <pre><code>{{ .Message }}</code></pre>
+        <h2>HTTP Request</h2>
+        <pre class="request-dump">{{ .HTTPRequest }}</pre>
+        {{ if .StackTrace }}
+        <h2>Traceback</h2>
+        <ul id="backtrace">
+          {{ range .StackTrace }}
+          <li><p><span class="file">{{ .File }}:</span><span class="lineno">{{ .Number }}</span> <span class="method">{{ .Method }}</span></p></li>
+          {{ end }}
+        </ul>
+        {{ end }}
+      </div>
+
+    </body>
+</html>
